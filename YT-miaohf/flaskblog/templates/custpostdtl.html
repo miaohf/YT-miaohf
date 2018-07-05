@@ -1,0 +1,106 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container-fluid">
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+        <div class="media-body ">
+            <div class="article-metadata">
+                <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}"><strong>{{ post.author.username }}</strong></a>
+                <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small> {% if post.author == current_user %}
+                <!--
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+          </div>
+  -->
+                {% endif %}
+            </div>
+            <h2 class="article-title">{{ post.title }}</h2>
+            <table class="lead">
+                <tr>
+                    <td style="width: 80px"><strong>工单编号 </strong></td>
+                    <td class="text-left"><strong>{{ post.ytid }}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>客户名称</strong> </td>
+                    <td class="text-left"><strong>{{ post.customer}}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>备注</strong> </td>
+                    <td class="text-left">{{ post.detail}}</td>
+                </tr>
+                <tr>
+                    <td><strong>总价</strong> </td>
+                    <td class="text-left"><strong>{{ post.price}}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>流程节点</strong> </td>
+                    <td class="text-left">{{ post.flowid}}</td>
+                </tr>
+                <tr>
+                    <td><strong>交货时间</strong></td>
+                    <td class="text-left">{{ post.deadline.strftime('%m-%d %H:%M') }}</td>
+                </tr>
+                <tr>
+                    <td><strong>当前处理</strong></td>
+                    <td class="text-left">{{ post.dealuser }}</td>
+                </tr>
+            </table>
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">主项</th>
+                        <th class="text-center">子项</th>
+                        <th class="text-center">单价</th>
+                        <th class="text-center">单位名称</th>
+                        <th class="text-center">每份计价数量</th>
+                        <th class="text-center">份数</th>
+                        <th class="text-center">费用(元)</th>
+                        <th class="text-center">创建时间</th>
+                        <th scope="col">效果图</th>
+                    </tr>
+                </thead>
+                {% for postdtl in postdtls %}
+                <tr>
+                    <td class="text-center">{{ postdtl.id }}</td>
+                    <td class="text-center">{{ postdtl.businame }}</td>
+                    <td class="text-center">{{ postdtl.busisubname }}</td>
+                    <td class="text-center">{{ postdtl.receiveprice }}</td>
+                    <td class="text-center">{{ postdtl.busisubunit }}</td>
+                    <td class="text-center">{{ postdtl.numexp }}</td>
+                    <td class="text-center">{{ postdtl.copys }}</td>
+                    <td class="text-center">{{ postdtl.receiveprice}} * {{postdtl.numexp}} * {{postdtl.copys }}</td>
+                    <td class="text-center">{{ postdtl.create_time }}</td>
+                    <td class="text-left">
+                        {% for render in postdtl.renderimg.split(";") %}
+                        <a href="http://oa.tuozhanad.com/{{post.customer}}/{{post.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}">
+           <img src="http://oa.tuozhanad.com/{{post.customer}}/{{post.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}" alt="" height=30>
+           </a> {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+</div>
+</article>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}
