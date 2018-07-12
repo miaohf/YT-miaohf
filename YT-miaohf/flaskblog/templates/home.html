@@ -6,7 +6,6 @@
     <table class="table table-sm table-bordered table-striped table-hover">
         <thead class="text-light bg-dark">
             <tr>
-                <th class="text-center">ID</th>
                 <th class="text-center">工单编号</th>
                 <th class="text-center">客户资料</th>
                 <th class="text-center">任务名称</th>
@@ -23,11 +22,10 @@
         <tbody class="lead">
             {% for post in posts.items %}
             <tr>
-                <td scope="row">{{post.id}}</td>
                 <td class="text-left"><a href="{{ url_for('posts.post', post_id=post.id) }}"><strong>{{ post.ytid }}</strong></a></td>
                 <td class="text-left"><a href="{{ url_for('custs.customers', custid=post.custid) }}">{{ post.customer}}</a></td>
-                <td class="text-left"><a data-toggle="tooltip" title="{{ post.title}}">{{ post.title|truncate(32)}}</a></td>
-                <td class="text-left"><pre><a data-toggle="tooltip" title="{{ post.detail}}"><strong>{{ post.detail|truncate(32)}}<strong></a></pre></td>
+                <td class="text-left"><a data-toggle="tooltip" title="{{ post.title}}">{{ post.title|truncate(28)}}</a></td>
+                <td class="text-left"><a data-toggle="tooltip" title="{{ post.detail}}">{{ post.detail|truncate(32)}}</a></td>
                 <td class="text-right">{{ post.price}}</td>
                 <td class="text-right">{{ post.togatheramount}}</td>
                 <td class="text-center">{{ post.flowid}}</td>

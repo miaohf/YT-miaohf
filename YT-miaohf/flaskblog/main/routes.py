@@ -5,6 +5,10 @@ main = Blueprint('main', __name__)
 
 
 @main.route("/")
+def tuozhan():
+    return render_template('tuozhan.html', title='tuozhan')
+
+
 @main.route("/home")
 def home():
     page = request.args.get('page', 1, type=int)
