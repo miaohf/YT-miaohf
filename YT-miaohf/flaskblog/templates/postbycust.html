@@ -4,39 +4,37 @@
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + '718ff8c80b00d7b0.png') }}">
         <div class="media-body">
-            <h4>{{ post.title }}</h4>
+            <h4>{{ post.ytid }}</h4>
             <table class="lead" border="0">
                 <tr>
-                    <td style="width: 80px"><strong>工单编号 </strong></td>
-                    <td class="text-left"><strong>{{ post.ytid }}</strong></td>
+                    <td style="width: 80px"><strong>工单名称 </strong></td>
+                    <td class="text-left"><strong>{{ post.title }}</strong></td>
                 </tr>
                 <tr>
                     <td><strong>客户名称</strong> </td>
                     <td class="text-left"><strong>{{ post.customer}}</strong></td>
                 </tr>
                 <tr>
+                    <td><strong>联系人员</strong> </td>
+                    <td class="text-left"><strong>{{ post.contacts}}:{{post.phone}}</strong></td>
+                </tr>
+                <tr>
                     <td><strong>备注</strong> </td>
-                    <td class="text-left"><pre>{{ post.detail}}</pre></td>
+                    <td class="text-left"><strong>{{ post.detail}}</strong></td>
                 </tr>
                 <tr>
                     <td><strong>总价</strong> </td>
                     <td class="text-left"><strong>{{ post.price}}</strong></td>
                 </tr>
                 <tr>
-                    <td><strong>流程节点</strong> </td>
-                    <td class="text-left">{{ post.flowid}}</td>
-                </tr>
-                <tr>
-                    <td><strong>交货时间</strong></td>
-                    <td class="text-left">{{ post.deadline.strftime('%m-%d %H:%M') }}</td>
-                </tr>
-                <tr>
-                    <td><strong>当前处理</strong></td>
-                    <td class="text-left">{{ post.dealuser }}</td>
+                    <td><strong>创建日期</strong></td>
+                    <td class="text-left"><strong>{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</strong></td>
                 </tr>
             </table>
-            <table class="table table-sm table-striped table-hover">
-                <thead class="thead-dark">
+            <p></p>
+             <div style="border: dashed grey;background:white">
+            <table class="table table-sm table-striped table-hover ">
+                <thead >
                     <tr>
                         <th class="text-center">工单编号</th>
                         <th class="text-center">客户名称</th>
@@ -70,11 +68,12 @@
                         {% endfor %}
                     </td>
                     <td class="text-center">{{ postdtl.receiveprice}} * {{postdtl.numexp}} * {{postdtl.copys }}</td>
-                    <td class="text-center">{{ postdtl.create_time.strftime('%m%d %H:%M') }}</td>
+                    <td class="text-center">{{ postdtl.create_time.strftime('%Y%m%d %H:%M') }}</td>
                     <td class="text-center">{{ postdtl.remark }}</td>
                 </tr>
                 {% endif %} {% endfor %}
             </table>
+        </div>
         </div>
     </article>
     {% endfor %} {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if posts.page == page_num %}

@@ -35,7 +35,7 @@ def post(post_id):
 def postcust(custid):
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(custid=custid).order_by(Post.date_posted.desc()).paginate(page=page, per_page=25)
-    return render_template('tuozhan.html', posts=posts)
+    return render_template('tuozhan.html', posts=posts, custid=custid)
 
 @posts.route("/post/cust/<int:custid>/dtl")
 @login_required
