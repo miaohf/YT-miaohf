@@ -1,11 +1,16 @@
 {% extends "layout.html" %} {% block content %}
 <div class="container-fluid">
     <div class="card-header">
+        {% if custid %}
+        <div>
+            <a href="{{ url_for('posts.postcustdtl', custid=custid) }}">
+            <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + 'bb79f0a219d8953f.png') }}"></a>
+        </div>
+        {% else %}
         <p><img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + '718ff8c80b00d7b0.png') }}"></p>
-        <a class="card-title"> 共: <strong>{{ posts.total }}</strong> 条</a> 
+        {% endif %}
+        <a class="card-title"> 共: <strong>{{ posts.total }}</strong> 条</a>
     </div>
-    {% if custid %}
-    <a href="{{ url_for('posts.postcustdtl', custid=custid) }}"><strong>客户对账单</strong></a> {% endif %}
     <table class="table table-sm table-bordered table-striped table-hover">
         <thead class="text-light bg-dark">
             <tr>
