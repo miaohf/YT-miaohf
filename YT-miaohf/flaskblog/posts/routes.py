@@ -40,10 +40,12 @@ def postcust(custid):
 @posts.route("/post/cust/<int:custid>/dtl")
 @login_required
 def postcustdtl(custid):
-    #page = request.args.get('page', 1, type=int)
-    #posts = Post.query.filter_by(custid=custid).order_by(Post.date_posted.desc()).paginate(page=page, per_page=25)
-    posts = Post.query.filter_by(custid=custid).first()
-    #postdtls = Postdtl.query.filter(Postdtl.ytid.in_(posts.items.ytid))
+
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(custid=custid).order_by(Post.date_posted.desc()).paginate(page=page, per_page=2500)
+    #return render_template('tuozhan.html', posts=posts)
+
+    #posts = Post.query.filter_by(custid=custid).order_by(Post.date_posted.desc())
     postdtls = Postdtl.query.join(Post,Postdtl.ytid==Post.ytid).filter(Post.custid==custid). \
     with_entities(Post.customer, \
         Post.date_posted, \
@@ -58,8 +60,7 @@ def postcustdtl(custid):
         Postdtl.numexp, \
         Postdtl.remark
         ).order_by(Postdtl.ytid)
-    #return render_template('tuozhan.html',  posts=posts)
-    return render_template('postbycust.html', title=posts.title, post=posts, postdtls=postdtls)
+    return render_template('postbycust.html',  posts=posts, postdtls=postdtls)
 
 @posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
