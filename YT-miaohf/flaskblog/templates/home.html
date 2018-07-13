@@ -2,42 +2,39 @@
 <div class="container-fluid">
     <div class="card-header">
         <div class="media">
-            <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + 'de83495bf2217a9b.png') }}">
+            <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + '718ff8c80b00d7b0.png') }}">
         </div>
         <a class="card-title"> 共: <strong>{{ posts.total }}</strong> 条</a>
     </div>
-</div>
-<table class="table table-sm table-bordered table-striped table-hover">
-    <thead class="text-light bg-dark">
-        <tr>
-            <th class="text-center">工单编号</th>
-            <th class="text-center">客户资料</th>
-            <th class="text-center">任务名称</th>
-            <th class="text-center">项目金额</th>
-            <th class="text-center">创建时间</th>
-            <th class="text-center">交货时间</th>
-            <th class="text-center">创建者</th>
-            <th class="text-center">当前处理</th>
-        </tr>
-    </thead>
-    <tbody class="lead">
-        {% for post in posts.items %}
-        <tr>
-            <td class="text-left"><strong>{{ post.ytid }}</strong></td>
-            <td class="text-left"><a href="{{ url_for('custs.customers', custid=post.custid) }}">{{ post.customer}}</a></td>
-            <td class="text-left"><a href="{{ url_for('posts.post', post_id=post.id) }}" data-toggle="tooltip" title="{{ post.detail}}">{{ post.title|truncate(28)}}</a></td>
-            <td class="text-right">{{ post.price}}</td>
-            <td class="text-center">{{ post.date_posted.strftime('%Y%m%d %H:%M') }}</td>
-            <td class="text-center">{{ post.deadline.strftime('%m-%d') }}</td>
-            <td class="text-center">{{ post.author.username }}</td>
-            <td class="text-center">{{ post.dealuser }}</td>
-        </tr>
-        {% endfor %}
-</table>
-{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if posts.page == page_num %}
-<a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a> {% else %}
-<a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a> {% endif %} {% else %} ... {% endif %} {% endfor %}
+    <table class="table table-sm table-bordered table-striped table-hover">
+        <thead class="text-light bg-dark">
+            <tr>
+                <th class="text-center">工单编号</th>
+                <th class="text-center">客户资料</th>
+                <th class="text-center">任务名称</th>
+                <th class="text-center">项目金额</th>
+                <th class="text-center">创建时间</th>
+                <th class="text-center">交货时间</th>
+                <th class="text-center">创建者</th>
+                <th class="text-center">当前处理</th>
+            </tr>
+        </thead>
+        <tbody class="lead">
+            {% for post in posts.items %}
+            <tr>
+                <td class="text-left"><strong>{{ post.ytid }}</strong></td>
+                <td class="text-left"><a href="{{ url_for('custs.customers', custid=post.custid) }}">{{ post.customer}}</a></td>
+                <td class="text-left"><a href="{{ url_for('posts.post', post_id=post.id) }}" data-toggle="tooltip" title="{{ post.detail}}">{{ post.title|truncate(28)}}</a></td>
+                <td class="text-right">{{ post.price}}</td>
+                <td class="text-center">{{ post.date_posted.strftime('%Y%m%d %H:%M') }}</td>
+                <td class="text-center">{{ post.deadline.strftime('%m-%d') }}</td>
+                <td class="text-center">{{ post.author.username }}</td>
+                <td class="text-center">{{ post.dealuser }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if posts.page == page_num %}
+    <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a> {% else %}
+    <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a> {% endif %} {% else %} ... {% endif %} {% endfor %}
 </div>
 {% endblock content %}
-
-
