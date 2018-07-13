@@ -1,0 +1,47 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container-fluid">
+    <table class="table table-sm table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">工单编号</th>
+                <th class="text-center">客户名称</th>
+                <th class="text-right">子项</th>
+                <th class="text-center">单价</th>
+                <th class="text-center">单位名称</th>
+                <th class="text-center">数量(每份)</th>
+                <th class="text-center">份数</th>
+                <th scope="col">参考图</th>
+                <th class="text-center">小计(元)</th>
+                <th class="text-center">创建时间</th>
+                <th class="text-center">备注</th>
+            </tr>
+        </thead>
+        {% for postdtl in postdtls %}
+        <tr>
+            <td class="text-center">{{ postdtl.ytid }}</td>
+            <td class="text-center">{{ postdtl.customer }}</td>
+            <td class="text-right">{{ postdtl.busisubname }}</td>
+            <td class="text-center">{{ postdtl.receiveprice }}</td>
+            <td class="text-center">{{ postdtl.busisubunit }}</td>
+            <td class="text-center">{{ postdtl.numexp }}</td>
+            <td class="text-center">{{ postdtl.copys }}</td>
+            <td class="text-left">
+                {% for render in postdtl.renderimg.split(";") %}
+                <div class="item">
+                    <a href="http://img.tuozhanad.com/{{postdtl.customer}}/{{postdtl.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}">
+           <img src="http://img.tuozhanad.com/{{postdtl.customer}}/{{postdtl.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}" alt="{{render}}" height=25>
+           </a>
+                </div>
+                {% endfor %}
+            </td>
+            <td class="text-center">{{ postdtl.receiveprice}} * {{postdtl.numexp}} * {{postdtl.copys }}</td>
+            <td class="text-center">{{ postdtl.create_time.strftime('%m%d %H:%M') }}</td>
+            <td class="text-center">{{ postdtl.remark }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</div>
+</article>
+<!-- Modal -->
+{% endblock content %}

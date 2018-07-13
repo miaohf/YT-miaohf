@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="card-header">
         <p><img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}"></p>
-        <a class="card-title"><strong> "{{ user.username }}"的工单 (共: {{ posts.total }} 条)</strong></a>
+        <a class="card-title"> "{{ user.username }}"的工单 (共: <strong>{{ posts.total }}</strong> 条)</a>
     </div>
     <table class="table table-sm table-bordered table-striped table-hover">
         <thead class="text-light bg-dark">
@@ -21,7 +21,7 @@
             {% for post in posts.items %}
             <tr>
                 <td class="text-left"><strong>{{ post.ytid }}</strong></td>
-                <td class="text-left"><a href="{{ url_for('custs.customers', custid=post.custid) }}">{{ post.customer}}</a></td>
+                <td class="text-left"><a href="{{ url_for('posts.postcust', custid=post.custid) }}">{{ post.customer}}</a></td>
                 <td class="text-left"><a href="{{ url_for('posts.post', post_id=post.id) }}" data-toggle="tooltip" title="{{ post.detail}}">{{ post.title|truncate(28)}}</a></td>
                 <td class="text-right">{{ post.price}}</td>
                 <td class="text-center">{{ post.date_posted.strftime('%Y%m%d %H:%M') }}</td>

@@ -9,10 +9,17 @@ from flaskblog.users.utils import save_picture, send_reset_email
 users = Blueprint('users', __name__)
 
 
+@users.route("/tuozhan")
+@login_required
+def tuozhan():
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=25)
+    return render_template('tuozhan.html', posts=posts)
+
 @users.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('users.tuozhan'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -27,14 +34,14 @@ def register():
 @users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('users.tuozhan'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('main.home'))
+            return redirect(next_page) if next_page else redirect(url_for('users.tuozhan'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -68,6 +75,7 @@ def account():
 
 
 @users.route("/user/<string:ytuserid>")
+@login_required
 def user_posts(ytuserid):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(ytuserid=ytuserid).first_or_404()
@@ -78,6 +86,7 @@ def user_posts(ytuserid):
     #return render_template('home.html', posts=posts, user=user)
 
 @users.route("/user/<string:ytuserid>/todo")
+@login_required
 def user_posts_todo(ytuserid):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(ytuserid=ytuserid).first_or_404()
@@ -91,7 +100,7 @@ def user_posts_todo(ytuserid):
 @users.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('users.tuozhan'))
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -104,7 +113,7 @@ def reset_request():
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('users.tuozhan'))
     user = User.verify_reset_token(token)
     if user is None:
         flash('That is an invalid or expired token', 'warning')

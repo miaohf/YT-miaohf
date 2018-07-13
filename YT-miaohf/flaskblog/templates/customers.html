@@ -25,7 +25,7 @@
             <tr>
                 <td scope="row">{{post.id}}</td>
                 <td class="text-left"><a href="{{ url_for('posts.post', post_id=post.id) }}"><strong>{{ post.ytid }}</strong></a></td>
-                <td class="text-left"><a href="{{ url_for('custs.customers', custid=post.custid) }}">{{ post.customer}}</a></td>
+                <td class="text-left"><a href="{{ url_for('posts.postcust', custid=post.custid) }}">{{ post.customer}}</a></td>
                 <td class="text-left"><a data-toggle="tooltip" title="{{ post.title}},{{post.detail}}">{{ post.title|truncate(32)}}</a></td>
                 <td class="text-left"><a data-toggle="tooltip" title="{{ post.detail}}"><strong>{{ post.detail|truncate(32)}}<strong></a></td>
                 <td class="text-right">{{ post.price}}</td>
