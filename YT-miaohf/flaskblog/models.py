@@ -83,6 +83,7 @@ class Postdtl(db.Model):
     create_time = db.Column(db.DateTime, nullable=False)
     copys = db.Column(db.Integer, nullable=False)
     numexp = db.Column(db.Integer, nullable=False)
+    remark = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
         return f"Post('{self.renderimg}', '{self.create_time}')"

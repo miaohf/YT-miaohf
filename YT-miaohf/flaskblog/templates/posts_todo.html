@@ -1,12 +1,9 @@
 {% extends "layout.html" %} {% block content %}
-
 <div class="container-fluid">
     <div class="card-header">
-    <div class="media">
-        <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}">
+        <p><img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}"></p>
+        <a class="card-title"><strong> "{{ user.username }}"的工单 (共: {{ posts.total }} 条)</strong></a>
     </div>
-    <a class="card-title"><strong> "{{ user.username }}"的工单 (共: {{ posts.total }} 条)</strong></a>
-</div>
     <table class="table table-sm table-bordered table-striped table-hover">
         <thead class="text-light bg-dark">
             <tr>

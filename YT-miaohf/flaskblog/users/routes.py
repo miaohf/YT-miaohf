@@ -67,14 +67,24 @@ def account():
                            image_file=image_file, form=form)
 
 
-@users.route("/user/<string:username>")
-def user_posts(username):
+@users.route("/user/<string:ytuserid>")
+def user_posts(ytuserid):
     page = request.args.get('page', 1, type=int)
-    user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user)\
+    user = User.query.filter_by(ytuserid=ytuserid).first_or_404()
+    posts = Post.query.filter_by(user_id=user.ytuserid)\
         .order_by(Post.date_posted.desc())\
         .paginate(page=page, per_page=27)
     return render_template('user_posts.html', posts=posts, user=user)
+    #return render_template('home.html', posts=posts, user=user)
+
+@users.route("/user/<string:ytuserid>/todo")
+def user_posts_todo(ytuserid):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(ytuserid=ytuserid).first_or_404()
+    posts = Post.query.filter_by(dealuser=user.username)\
+        .order_by(Post.date_posted.desc())\
+        .paginate(page=page, per_page=27)
+    return render_template('posts_todo.html', posts=posts, user=user)
     #return render_template('home.html', posts=posts, user=user)
 
 
