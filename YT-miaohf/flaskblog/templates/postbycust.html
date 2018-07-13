@@ -1,15 +1,9 @@
 {% extends "layout.html" %} {% block content %}
 <div class="container-fluid">
-                {% for post in posts.items %}
+    {% for post in posts.items %}
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + '718ff8c80b00d7b0.png') }}">
         <div class="media-body">
-
-
-
-
-                            <p>......</p>
-
             <h4>{{ post.title }}</h4>
             <table class="lead" border="0">
                 <tr>
@@ -57,8 +51,7 @@
                         <th class="text-center">备注</th>
                     </tr>
                 </thead>
-                {% for postdtl in postdtls %}
-                 {% if postdtl.ytid == post.ytid %}
+                {% for postdtl in postdtls %} {% if postdtl.ytid == post.ytid %}
                 <tr>
                     <td class="text-center">{{ postdtl.ytid }}</td>
                     <td class="text-center">{{ postdtl.customer }}</td>
@@ -80,21 +73,13 @@
                     <td class="text-center">{{ postdtl.create_time.strftime('%m%d %H:%M') }}</td>
                     <td class="text-center">{{ postdtl.remark }}</td>
                 </tr>
-                {% endif %}  {% endfor %} 
-
-
-              
-
-
+                {% endif %} {% endfor %}
             </table>
         </div>
-
-
-</article>
-   {% endfor %}
-           {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if posts.page == page_num %}
-        <a class="btn btn-info mb-4" href="{{ url_for('users.tuozhan', page=page_num) }}">{{ page_num }}</a> {% else %}
-        <a class="btn btn-outline-info mb-4" href="{{ url_for('users.tuozhan', page=page_num) }}">{{ page_num }}</a> {% endif %} {% else %} ... {% endif %} {% endfor %}
-<!-- Modal -->
+    </article>
+    {% endfor %} {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if posts.page == page_num %}
+    <a class="btn btn-info mb-4" href="{{ url_for('users.tuozhan', page=page_num) }}">{{ page_num }}</a> {% else %}
+    <a class="btn btn-outline-info mb-4" href="{{ url_for('users.tuozhan', page=page_num) }}">{{ page_num }}</a> {% endif %} {% else %} ... {% endif %} {% endfor %}
+    <!-- Modal -->
 </div>
 {% endblock content %}
