@@ -6,8 +6,9 @@
             <table border="1" class="text-center" bgcolor="#f5f5ef">
                 <TR bgcolor="#d7d7c1" height="25px" width="60px">
                     <TH class="text-center" width="25px">ID</TH>
-                    <TH class="text-center" width="120px">工单编号</TH>
-                    <TH class="text-center" width="800px">任务名称</TH>
+                    <TH class="text-center" width="100px">工单编号</TH>
+                    <TH class="text-center" width="120px">客户名称</TH>
+                    <TH class="text-center" width="700px">任务名称</TH>
                     <TH class="text-center" width="100px">工单小计</TH>
                     <TH class="text-center" width="100px">创建日期</TH>
                     <TH class="text-center" width="115px">创建人员</TH>
@@ -16,6 +17,7 @@
                 <tr>
                     <td class="text-center">{{ loop.index }}</td>
                     <td class="text-center">{{ post.ytid }}</td>
+                    <td class="text-center">{{ post.customer }}</td>
                     <td class="text-right">{{ post.title|truncate}}</td>
                     <td class="text-right">{{ post.price}}</td>
                     <td class="text-center">{{ post.date_posted.strftime('%Y-%m-%d') }}</td>
@@ -65,8 +67,8 @@
                     <TH height="25px">RowId</TH>
                     <TH width="120px">子项</TH>
                     <TH width="25px">单价</TH>
-                    <TH width="25px">计价单位</TH>
-                    <TH width="15px">数量(每份)</TH>
+                    <TH width="25px">单位</TH>
+                    <TH width="15px">数量</TH>
                     <TH width="10px">份数</TH>
                     <TH width="25px">参考图</TH>
                     <TH width="25px">创建时间</TH>
@@ -85,7 +87,7 @@
                         {% for render in postdtl.renderimg.split(";") %} {% if render %}
                         <div class="item">
                             <a href="http://img.tuozhanad.com/{{postdtl.customer}}/{{postdtl.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}">
-           <img src="http://img.tuozhanad.com/{{postdtl.customer}}/{{postdtl.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}" alt="{{render}}" height=25>
+           <img src="http://img.tuozhanad.com/{{postdtl.customer}}/{{postdtl.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}" alt="{{render}}" height=40>
            </a>
                         </div>
                         {% endif %} {% endfor %}
