@@ -1,0 +1,86 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container-fluid">
+    {% for post in posts.items %}
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + '17b9e27d9f36cde5.png') }}">
+        <div class="media-body">
+            <h4>{{ post.ytid }}</h4>
+            
+            <table class="lead" border="0">
+                <tr>
+                    <td style="width: 80px"><strong>工单名称 </strong></td>
+                    <td class="text-left"><strong>{{ post.title }}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>客户名称</strong> </td>
+                    <td class="text-left"><strong>{{ post.customer}}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>联系人员</strong> </td>
+                    <td class="text-left"><strong>{{ post.contacts}}:{{post.phone}}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>备注</strong> </td>
+                    <td class="text-left"><strong>{{ post.detail}}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>总价</strong> </td>
+                    <td class="text-left"><strong>{{ post.price}}</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>创建日期</strong></td>
+                    <td class="text-left"><strong>{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</strong></td>
+                </tr>
+            </table>
+            <p></p>
+            <div style="border: 0px solid grey; background-color: #ddf2ff">
+                <caption>
+                    <h5><strong>任务明细（列表）</strong></h5></caption>
+                <table class="table table-sm table-hover ">
+
+                    <thead>
+                        <tr>
+                            <th class="text-center">工单编号</th>
+                            <th class="text-right">子项</th>
+                            <th class="text-center">单价</th>
+                            <th class="text-center">单位名称</th>
+                            <th class="text-center">数量(每份)</th>
+                            <th class="text-center">份数</th>
+                            <th scope="col">参考图</th>
+                            <th class="text-center">小计(元)</th>
+                            <th class="text-center">创建时间</th>
+                            <th class="text-center">备注</th>
+                        </tr>
+                    </thead>
+                    {% for postdtl in postdtls %} {% if postdtl.ytid == post.ytid %}
+                    <tr>
+                        <td class="text-center">{{ postdtl.ytid }}</td>
+                        <td class="text-right">{{ postdtl.busisubname }}</td>
+                        <td class="text-center">{{ postdtl.receiveprice }}</td>
+                        <td class="text-center">{{ postdtl.busisubunit }}</td>
+                        <td class="text-center">{{ postdtl.numexp }}</td>
+                        <td class="text-center">{{ postdtl.copys }}</td>
+                        <td class="text-left">
+                            {% for render in postdtl.renderimg.split(";") %} {% if render %}
+                            <div class="item">
+                                <a href="http://img.tuozhanad.com/{{postdtl.customer}}/{{postdtl.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}">
+           <img src="http://img.tuozhanad.com/{{postdtl.customer}}/{{postdtl.date_posted.strftime('%Y-%m-%d')}}/{{postdtl.ytid}}/xgt/{{render}}" alt="{{render}}" height=25>
+           </a>
+                            </div>
+                            {% endif %} {% endfor %}
+                        </td>
+                        <td class="text-center">{{ postdtl.receiveprice}} * {{postdtl.numexp}} * {{postdtl.copys }}</td>
+                        <td class="text-center">{{ postdtl.create_time.strftime('%Y%m%d %H:%M') }}</td>
+                        <td class="text-center">{{ postdtl.remark }}</td>
+                    </tr>
+                    {% endif %} {% endfor %}
+                </table>
+            </div>
+        </div>
+    </article>
+    {% endfor %} {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if posts.page == page_num %}
+    <a class="btn btn-info mb-4" href="{{ url_for('users.tuozhan', page=page_num) }}">{{ page_num }}</a> {% else %}
+    <a class="btn btn-outline-info mb-4" href="{{ url_for('users.tuozhan', page=page_num) }}">{{ page_num }}</a> {% endif %} {% else %} ... {% endif %} {% endfor %}
+    <!-- Modal -->
+</div>
+{% endblock content %}
